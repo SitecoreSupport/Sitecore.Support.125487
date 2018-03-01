@@ -10,9 +10,11 @@
 namespace Sitecore.Support.Modules.EmailCampaign.Core.Pipelines.GenerateLink
 {
   using System.Text;
+  using System.Web;
   using Diagnostics;   
   using Sitecore.Modules.EmailCampaign.Core.Pipelines.GenerateLink;
   using Sitecore.Modules.EmailCampaign.Core.Links;
+  
 
   /// <summary>
   /// Processor which generates preview links
@@ -38,8 +40,8 @@ namespace Sitecore.Support.Modules.EmailCampaign.Core.Pipelines.GenerateLink
       {
         link.Append(string.IsNullOrEmpty(args.MailMessage.ManagerRoot.Settings.PreviewBaseURL) ? args.ServerUrl : args.MailMessage.ManagerRoot.Settings.PreviewBaseURL);
       }
-      
-      link.Append(args.Url);
+
+      link.Append(HttpUtility.HtmlDecode(args.Url));
 
       args.GeneratedUrl = link.ToString();
     }
